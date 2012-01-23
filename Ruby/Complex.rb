@@ -1,7 +1,7 @@
 class Complex
 
-   def initialize(a, b)
-      @real, @imag = a, b
+   def initialize(real, imag)
+      @real, @imag = real, imag
    end
 
    def Re
@@ -13,12 +13,21 @@ class Complex
    end
 
    # overload assignment operators
-   def Re=(a)
-      @real = a
+   def Re=(real)
+      @real = real
    end
 
-   def Im=(b)
-      @imag = b
+   def Im=(imag)
+      @imag = imag
+   end
+
+   def set(real, imag)
+      @real, @imag = real, imag
+   end
+
+   # define show
+   def show
+      print "(", @real, ", ", @imag, ")\n"
    end
 
    # overload arithmetic operators
@@ -30,29 +39,37 @@ class Complex
       Complex.new(@real - z.Re, @imag - z.Im)
    end
 
+   def *(z)
+      Complex.new(@real * z.Re - @imag * z.Im,
+                  @real * z.Im + @imag * z.Re)
+   end
+
    # overload comparison operators
 
-end
-
-def testReIm
-   z = Complex.new(0.0, 0.0)
-   puts z.Re, z.Im
 end
 
 def testAssignmentOperator
    z = Complex.new(0.0, 0.0)
    z.Re, z.Im = 1.0, 2.0
-   puts z.Re, z.Im
+   z.show
+   z.set(3.0, 4.0)
+   z.show
+   w = z
+   w.show
 end
 
 def testArithmeticOperators
-   z = Complex.new(0.0, 1.0)
-   w = Complex.new(2.0, 3.0)
+   z = Complex.new(1.0, 2.0)
+   w = Complex.new(3.0, 4.0)
    sum = z + w
-   puts sum.Re, sum.Im
+   sum.show
+   diff = z - w
+   diff.show
+   prod = z * w
+   prod.show
 end
 
-testReIm
 testAssignmentOperator
+puts
 testArithmeticOperators
 
