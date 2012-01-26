@@ -24,7 +24,16 @@ def testArithmeticOperators() :
    U = V / 2.0
    U.show()
 
+def testVectorOperators() :
+   V = Vector([0.0, 1.0, 2.0])
+   W = Vector([3.0, 4.0, 5.0])
+   print V.dot(W)
+   print V.norm()
+   U = V.cross(W)
+   U.show()
+
 if __name__ == '__main__' :
-   testAssignmentOperators()
-   testArithmeticOperators()
+   # testAssignmentOperators()
+   # testArithmeticOperators()
+   testVectorOperators()
 

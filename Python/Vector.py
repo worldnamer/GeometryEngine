@@ -1,3 +1,5 @@
+import math
+
 class Vector :
 
    def __init__(self, V) :
@@ -52,4 +54,24 @@ class Vector :
       for k in range(self.dim) :
          quot.append(self.comps[k] / a)
       return Vector(quot)
+
+   # dot product
+   def dot(self, V) :
+      dotprod = 0.0
+      for k in range(self.dim) :
+         dotprod += self.comps[k] * V[k]
+      return dotprod
+
+   # norm
+   def norm(self) :
+      return math.sqrt(self.dot(self))
+
+   # cross product
+   def cross(self, V) :
+      assert self.dim == 3
+      crossprod = [None, None, None]
+      crossprod[0] = self.comps[1] * V[2] - self.comps[2] * V[1]
+      crossprod[1] = self.comps[2] * V[0] - self.comps[0] * V[2]
+      crossprod[2] = self.comps[0] * V[1] - self.comps[1] * V[0]
+      return Vector(crossprod)
 
