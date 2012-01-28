@@ -3,16 +3,22 @@ public class testVector {
 
    public static void testAssignmentOperators() {
       Double[] Varray = {1.0, 2.0, 3.0};
-      Vector<Double> V = new Vector<Double>(Varray);
+      Vector V = new Vector(Varray);
+      V.show();
+   }
 
-      System.out.println(V.size());
-      for (Integer k = 0; k < V.size(); k++) {
-         System.out.println(V.get(k));
-      }
+   public static void testArithmeticOperators() {
+      Double[] Varray = {0.0, 1.0, 2.0};
+      Vector V = new Vector(Varray);
+      Double[] Warray = {3.0, 4.0, 5.0};
+      Vector W = new Vector(Warray);
+      Vector U = V.add(W);
+      U.show();
    }
 
    public static void main(String[] args) {
       testAssignmentOperators();
+      testArithmeticOperators();
    }
 }
 

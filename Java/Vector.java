@@ -1,12 +1,18 @@
 
-public class Vector<T> {
+public class Vector {
 
-   private T comps[];
+   private Double comps[];
    private Integer dim;
 
    // constructors
-   Vector(T V[]) {
-      comps = (T[]) V.clone();
+
+   Vector(Integer n) {
+      dim = n;
+      comps = new Double[dim];
+   }
+
+   Vector(Double V[]) {
+      comps = (Double[]) V.clone();
       dim = V.length;
    }
 
@@ -14,8 +20,27 @@ public class Vector<T> {
       return dim;
    }
 
-   public T get(Integer k) {
+   public Double get(Integer k) {
       return comps[k];
+   }
+
+   public void set(Integer k, Double a) {
+      comps[k] = a;
+   }
+
+   public void show() {
+      for (Integer k = 0; k < dim; k++) {
+         System.out.println(comps[k]);
+      }
+   }
+
+   // vector addition
+   public Vector add(Vector V){
+      Double[] sum = new Double[dim];
+      for (Integer k = 0; k < dim; k++) {
+         sum[k] = comps[k] + V.get(k);
+      }
+      return new Vector(sum);
    }
 }
 
