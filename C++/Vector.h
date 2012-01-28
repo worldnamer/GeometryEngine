@@ -1,11 +1,11 @@
 // class Vector
-//    an element V of an n-dimensional vector space
+//    an element a (dim)-dimensional vector space
 //    over the field T
 
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include <math.h>
+#include <cmath>
 
 #include "BaseTypes.h"
 
@@ -14,72 +14,69 @@ class Vector {
 
    protected:
 
-      Index n;   // vector space dimension
-      T*  V;     // vector
+      T* comps;  // vector components
+      Index dim; // vector space dimension
 
    public:
 
       // constructors
       Vector() {
-         n = 1;
-         V = new T[n];
+         dim = 1;
+         comps = new T[dim];
       }
 
-      Vector(Index dim) {
-         n = dim;
-         V = new T[n];
+      Vector(Index n) {
+         dim = n;
+         comps = new T[dim];
       }
 
-      Vector(Index dim, T s) {
-         n = dim;
-         V = new T[n];
-         for (Index k = 0; k < n; k++) {
-            V[k] = s;
+      Vector(Index n, T s) {
+         dim = n;
+         comps = new T[dim];
+         for (Index k = 0; k < dim; k++) {
+            comps[k] = s;
          }
       }
 
       // destructor
-      ~Vector() { delete[] V; }
+      ~Vector() { delete[] comps; }
 
       // dimensionality
-      Index dim() const { return n; }
-      Index size() const { return n; }
-      T* begin() { return V; }
-      T* end() { return V + n; }
+      Index size() const { return dim; }
 
       // vector component
       T operator[](Index k) const {
-         return V[k];
+         return comps[k];
       }
 
       // vector component assignment
       T& operator[](Index k) {
-         return V[k];
+         return comps[k];
       }
 
       // must pass by reference when overloading operators
  
       // vector assignment
-      Vector<T>& operator = (const Vector<T>& W) {
-         for (Index k = 0; k < n; k++) {
-            V[k] = W[k];
+      Vector<T>& operator = (const Vector<T>& V) {
+         for (Index k = 0; k < dim; k++) {
+            comps[k] = V[k];
          }
          return *this;
       }
 
       // scalar assignment
       Vector<T>& operator = (const T& s) {
-         for (Index k = 0; k < n; k++) {
-            V[k] = s;
+         for (Index k = 0; k < dim; k++) {
+            comps[k] = s;
          }
          return *this;
       }
 
       // vector addition
-      Vector<T> operator + (const Vector<T>& W) const {
+      Vector<T> operator + (const Vector<T>& V) const {
          Vector<T> sum;
-         for (Index k = 0; k < n; k++) {
-            sum[k] = V[k] + W[k];
+         for (Index k = 0; k < dim; k++) {
+            sum[k] = comps[k] + V[k];
          }
          return sum;
       }
@@ -87,82 +84,82 @@ class Vector {
       // addition of scalar
       Vector<T> operator + (const T& s) const {
          Vector<T> sum;
-         for (Index k = 0; k < n; k++) {
-            sum[k] = V[k] + s;
+         for (Index k = 0; k < dim; k++) {
+            sum[k] = comps[k] + s;
          }
          return sum;
       }
 
       // vector subtraction
-      Vector<T> operator - (const Vector<T>& W) const {
-         Vector<T> difference;
-         for (Index k = 0; k < n; k++) {
-            difference[k] = V[k] - W[k];
+      Vector<T> operator - (const Vector<T>& V) const {
+         Vector<T> diff;
+         for (Index k = 0; k < dim; k++) {
+            diff[k] = comps[k] - V[k];
          }
-         return difference;
+         return diff;
       }
 
       // subtraction of scalar
       Vector<T> operator - (const T& s) const {
-         Vector<T> difference;
-         for (Index k = 0; k < n; k++) {
-            difference[k] = V[k] - s;
+         Vector<T> diff;
+         for (Index k = 0; k < dim; k++) {
+            diff[k] = comps[k] - s;
          }
-         return difference;
+         return diff;
       }
 
       // elementwise product
-      T operator * (const Vector<T>& W) const {
-         Vector<T> product;
-         for (Index k = 0; k < n; k++) {
-            product[k] = V[k] * W[k];
+      T operator * (const Vector<T>& V) const {
+         Vector<T> prod;
+         for (Index k = 0; k < dim; k++) {
+            prod[k] = comps[k] * V[k];
          }
-         return product;
+         return prod;
       }
 
       // scalar multiplication
       Vector<T> operator * (const T& s) const {
-         Vector<T> product;
-         for (Index k = 0; k < n; k++) {
-            product[k] = V[k] * s;
+         Vector<T> prod;
+         for (Index k = 0; k < dim; k++) {
+            prod[k] = comps[k] * s;
          }
-         return product;
+         return prod;
       }
 
       // elementwise division
-      T operator / (const Vector<T>& W) const {
-         Vector<T> quotient;
-         for (Index k = 0; k < n; k++) {
-            quotient[k] = V[k] / W[k];
+      T operator / (const Vector<T>& V) const {
+         Vector<T> quot;
+         for (Index k = 0; k < dim; k++) {
+            quot[k] = comps[k] / V[k];
          }
-         return quotient;
+         return quot;
       }
 
       // scalar division
       Vector<T> operator / (const T& s) const {
-         Vector<T> quotient;
-         for (Index k = 0; k < n; k++) {
-            quotient[k] = V[k] / s;
+         Vector<T> quot;
+         for (Index k = 0; k < dim; k++) {
+            quot[k] = comps[k] / s;
          }
-         return quotient;
+         return quot;
       }
 
       // inner or dot product
-      T dot(Vector<T> W) {
-         T dotproduct(0);
-         for (Index k = 0; k < n; k++) {
-            dotproduct += V[k] * W[k];
+      T dot(Vector<T> V) {
+         T dotprod(0);
+         for (Index k = 0; k < dim; k++) {
+            dotprod += comps[k] * V[k];
          }
-         return dotproduct;
+         return dotprod;
       }
 
       // norm
       T norm() {
-         T normsquared(0);
-         for (Index k = 0; k < n; k++) {
-            normsquared += V[k] * V[k];
+         T normsq(0);
+         for (Index k = 0; k < dim; k++) {
+            normsq += comps[k] * comps[k];
          }
-         return sqrt(normsquared);
+         return sqrt(normsq);
       }
 } ;
 
