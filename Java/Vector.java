@@ -1,15 +1,21 @@
-public class Vector {
 
-   private double comps[];
-   private int dim;
+public class Vector<T> {
+
+   private T comps[];
+   private Integer dim;
 
    // constructors
-   Vector(double V[]) {
-      comps = (double[]) V.clone();
+   Vector(T V[]) {
+      comps = (T[]) V.clone();
       dim = V.length;
    }
 
-   int size() {
+   public Integer size() {
       return dim;
    }
+
+   public T get(Integer k) {
+      return comps[k];
+   }
 }
+
